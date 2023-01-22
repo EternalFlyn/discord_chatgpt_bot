@@ -1,4 +1,5 @@
 import bot.Bot
+import io.github.cdimascio.dotenv.dotenv
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.events.ReadyEvent
 import net.dv8tion.jda.api.hooks.EventListener
@@ -9,7 +10,11 @@ fun main() {
             println("I'm ready!")
         }
     }
-    val jda = JDABuilder.createDefault("MTA1ODI5MjY4OTcwNTEyMzg2MQ.G2jGXi.cL7_pkmViPuVkM70pcYqMfxYRM5GKwX5DWXc5s")
+    val dotenv = dotenv {
+        directory = "assets"
+        filename = "env"
+    }
+    val jda = JDABuilder.createDefault(dotenv["DISCORD_TOKEN"])
         .addEventListeners(ready)
         .addEventListeners(Bot())
         .build()

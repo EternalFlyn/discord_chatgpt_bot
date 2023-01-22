@@ -2,12 +2,17 @@ package bot
 
 import com.theokanning.openai.OpenAiService
 import com.theokanning.openai.completion.CompletionRequest
+import io.github.cdimascio.dotenv.dotenv
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 
 class Bot: ListenerAdapter() {
 
-    private val service = OpenAiService("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");
+    private val dotenv = dotenv {
+        directory = "assets"
+        filename = "env"
+    }
+    private val service by lazy { OpenAiService(dotenv["OPENAI_TOKEN"]) }
 
     override fun onMessageReceived(event: MessageReceivedEvent) {
         val message = event.message
